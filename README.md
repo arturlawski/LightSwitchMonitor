@@ -1,88 +1,88 @@
 # LightSwitch Monitor
 
-LightSwitch Monitor to lekka aplikacja dla Windows 11, która automatycznie przyciemnia wszystkie monitory poza tym, na którym aktualnie znajduje się kursor myszy. Program działa w tle, jest dostępny z obszaru powiadomień systemu Windows i pozwala szybko ustawić poziom przyciemnienia suwakiem.
+LightSwitch Monitor is a lightweight Windows 11 tray application that automatically dims every monitor except the one currently under the mouse cursor. It is built for multi-monitor setups where the active screen should stay visually prominent without changing physical monitor brightness.
 
-## Najważniejsze funkcje
+## Features
 
-- Automatyczne wykrywanie monitora z aktywnym kursorem.
-- Przyciemnianie nieaktywnych ekranów za pomocą przezroczystych nakładek.
-- Praca w tle z ikoną w trayu.
-- Kompaktowe okno ustawień otwierane kliknięciem w ikonę aplikacji.
-- Regulacja poziomu przyciemnienia w zakresie od 5% do 85%.
-- Zapisywanie ustawień między uruchomieniami.
-- Ukrywanie okna ustawień po zamknięciu bez wyłączania aplikacji.
+- Automatically detects the monitor currently containing the mouse cursor.
+- Dims inactive displays using transparent click-through overlays.
+- Runs quietly in the Windows notification area.
+- Opens a compact settings window from the tray icon.
+- Provides an adjustable dimming slider from 5% to 85%.
+- Saves user preferences between launches.
+- Keeps running in the tray when the settings window is closed.
 
-## Jak działa aplikacja
+## How It Works
 
-Aplikacja tworzy niewielkie, bezramkowe okna WPF nad nieaktywnymi monitorami. Okna te są czarne, półprzezroczyste i skonfigurowane jako klik-przezroczyste, dzięki czemu nie przechwytują myszy, nie zabierają fokusu i nie przeszkadzają w pracy.
+The application creates borderless WPF overlay windows on inactive monitors. These overlays are black, semi-transparent, topmost, and configured with native Windows extended styles so they do not steal focus or block mouse interaction.
 
-Pozycja kursora jest sprawdzana cyklicznie. Gdy kursor przejdzie na inny monitor, dotychczas aktywny ekran zostaje przyciemniony, a nowy ekran aktywny wraca do normalnego wyglądu.
+The cursor position is checked continuously. When the cursor moves to another monitor, the previous active monitor is dimmed and the new active monitor is restored.
 
-## Wymagania
+## Requirements
 
 - Windows 11
-- .NET SDK zgodny z `net10.0-windows`
-- Co najmniej dwa monitory, aby efekt przyciemniania był widoczny
+- .NET SDK compatible with `net10.0-windows`
+- At least two monitors to see the dimming behavior
 
-## Budowanie projektu
+## Build
 
-W katalogu projektu uruchom:
+Run the following command from the project directory:
 
 ```powershell
 dotnet build .\LightSwitchMonitor.csproj
 ```
 
-Plik wykonywalny w konfiguracji debug zostanie utworzony tutaj:
+The debug executable is generated at:
 
 ```text
 bin\Debug\net10.0-windows\LightSwitchMonitor.exe
 ```
 
-## Uruchamianie
+## Run
 
-Uruchom aplikację z pliku:
+Launch the application from:
 
 ```text
 bin\Debug\net10.0-windows\LightSwitchMonitor.exe
 ```
 
-Po uruchomieniu program pojawi się w obszarze powiadomień systemu Windows.
+After startup, LightSwitch Monitor appears in the Windows notification area.
 
-- Lewy klik w ikonę otwiera okno ustawień.
-- Prawy klik w ikonę otwiera menu kontekstowe.
-- Suwak w oknie ustawień zmienia poziom przyciemnienia.
-- Menu kontekstowe pozwala włączyć, wyłączyć lub zamknąć aplikację.
+- Left-click the tray icon to open the settings window.
+- Right-click the tray icon to open the context menu.
+- Use the slider to adjust inactive-monitor dimming.
+- Use the context menu to enable, disable, or exit the application.
 
-## Ustawienia
+## Settings
 
-Ustawienia użytkownika są zapisywane w pliku:
+User settings are stored in:
 
 ```text
 %APPDATA%\LightSwitchMonitor\settings.json
 ```
 
-Aktualnie zapisywane są:
+The settings file currently stores:
 
-- stan włączenia przyciemniania,
-- wybrany poziom przyciemnienia.
+- whether dimming is enabled,
+- the selected dimming percentage.
 
-## Struktura projektu
+## Project Structure
 
 ```text
 LightSwitchMonitor
-├── App.xaml / App.xaml.cs              start aplikacji i integracja z trayem
+├── App.xaml / App.xaml.cs              application startup and tray integration
 ├── MainWindow.xaml / MainWindow.xaml.cs
-│                                       okno ustawień i obsługa suwaka
-├── MonitorDimmerService.cs             wykrywanie monitorów i sterowanie nakładkami
-├── DimOverlayWindow.cs                 klik-przezroczysta nakładka przyciemniająca
-├── AppSettings.cs                      zapis i odczyt ustawień użytkownika
-└── LightSwitchMonitor.csproj           konfiguracja projektu WPF
+│                                       settings window and slider behavior
+├── MonitorDimmerService.cs             monitor detection and overlay coordination
+├── DimOverlayWindow.cs                 click-through dimming overlay window
+├── AppSettings.cs                      user settings persistence
+└── LightSwitchMonitor.csproj           WPF project configuration
 ```
 
-## Uwagi techniczne
+## Technical Notes
 
-- Aplikacja nie zmienia sprzętowej jasności monitorów.
-- Przyciemnianie jest realizowane wizualnie przez półprzezroczyste nakładki.
-- Przy jednym podłączonym monitorze nakładki są automatycznie ukrywane.
-- Zamknięcie okna ustawień nie kończy działania aplikacji; proces pozostaje aktywny w trayu.
+- The app does not change hardware monitor brightness.
+- Dimming is implemented visually through semi-transparent overlays.
+- With only one connected monitor, overlays are hidden automatically.
+- Closing the settings window does not stop the application; the process remains active in the tray.
 
