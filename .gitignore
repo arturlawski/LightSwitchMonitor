@@ -1,0 +1,19 @@
+# Build output
+bin/
+obj/
+publish/
+dist/
+
+# IDE state
+.vs/
+.idea/
+*.user
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# Local OS files
+Thumbs.db
+Desktop.ini

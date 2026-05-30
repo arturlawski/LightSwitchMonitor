@@ -1,5 +1,8 @@
 using System.Drawing;
 using System.Windows;
+using LightSwitchMonitor.Configuration;
+using LightSwitchMonitor.Services;
+using LightSwitchMonitor.Views;
 using Forms = System.Windows.Forms;
 
 namespace LightSwitchMonitor

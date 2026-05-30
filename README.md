@@ -32,18 +32,44 @@ Run the following command from the project directory:
 dotnet build .\LightSwitchMonitor.csproj
 ```
 
-The debug executable is generated at:
+This creates a standard development build under:
 
 ```text
 bin\Debug\net10.0-windows\LightSwitchMonitor.exe
 ```
 
+## Single-File Release
+
+To create the minimal distributable build, use the included `SingleExe` publish profile:
+
+```powershell
+dotnet publish .\LightSwitchMonitor.csproj -p:PublishProfile=SingleExe
+```
+
+You can also use the included build script:
+
+```powershell
+.\build.ps1
+```
+
+The release output is a single executable:
+
+```text
+dist\LightSwitchMonitor.exe
+```
+
 ## Run
 
-Launch the application from:
+For development, launch the debug executable:
 
 ```text
 bin\Debug\net10.0-windows\LightSwitchMonitor.exe
+```
+
+For distribution or normal local use, launch the single-file release executable:
+
+```text
+dist\LightSwitchMonitor.exe
 ```
 
 After startup, LightSwitch Monitor appears in the Windows notification area.
@@ -70,13 +96,19 @@ The settings file currently stores:
 
 ```text
 LightSwitchMonitor
-├── App.xaml / App.xaml.cs              application startup and tray integration
-├── MainWindow.xaml / MainWindow.xaml.cs
-│                                       settings window and slider behavior
-├── MonitorDimmerService.cs             monitor detection and overlay coordination
-├── DimOverlayWindow.cs                 click-through dimming overlay window
-├── AppSettings.cs                      user settings persistence
-└── LightSwitchMonitor.csproj           WPF project configuration
+├── App.xaml / App.xaml.cs                    application startup and tray integration
+├── Configuration/
+│   └── AppSettings.cs                        user settings persistence
+├── Services/
+│   └── MonitorDimmerService.cs               monitor detection and overlay coordination
+├── Views/
+│   ├── MainWindow.xaml / MainWindow.xaml.cs  settings window and slider behavior
+│   └── DimOverlayWindow.cs                   click-through dimming overlay window
+├── Properties/
+│   ├── AssemblyInfo.cs                       WPF assembly metadata
+│   └── PublishProfiles/
+│       └── SingleExe.pubxml                  single-file release profile
+└── LightSwitchMonitor.csproj                 WPF project configuration
 ```
 
 ## Technical Notes
@@ -85,4 +117,3 @@ LightSwitchMonitor
 - Dimming is implemented visually through semi-transparent overlays.
 - With only one connected monitor, overlays are hidden automatically.
 - Closing the settings window does not stop the application; the process remains active in the tray.
-
